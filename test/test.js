@@ -5,6 +5,8 @@ const expect = require('chai').expect;
 describe('Spell checking', function() {
     describe('English checking', function() {
         it('Loading English dictionary', function() {
+            this.timeout(2000);
+
             spell.clear();
             spell.load({input: 'en', time: false})
         });
@@ -24,6 +26,8 @@ describe('Spell checking', function() {
     });
 
     describe('Russian checking', function() {
+        this.timeout(3000);
+
         it('Loading Russian dictionary', function() {
             spell.clear();
             spell.load({input: 'ru', time: false})
@@ -44,7 +48,9 @@ describe('Spell checking', function() {
     });
 
     describe('Russian surnames checking', function() {
-        it('Loading Russian dictionary', function() {
+        it('Loading Russian surnames dictionary', function() {
+            this.timeout(3000);
+
             spell.clear();
             spell.load({input: 'ru_surnames', time: false})
         });
