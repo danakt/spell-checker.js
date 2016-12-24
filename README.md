@@ -1,5 +1,9 @@
 # Spell-checker.js
-Simple expandable tool for spell checking
+Simple expandable tool for spell checking  
+
+[![Travis branch](https://img.shields.io/travis/danakt/spell-checker-js/master.svg?style=flat-square)]()
+[![npm](https://img.shields.io/npm/v/spell-checker-js.svg?style=flat-square)]()
+
 
 ## Quickstart
 **Install:**  
@@ -20,6 +24,8 @@ spell.check('Some text to check, blahblahblah, olololo')
 
 ## Methods
 #### `spell.load(dic)` — load dictionary file
+**WARNING:** Too large files can increase speed of script initialization  
+
 **Examples:**
 ```js
 // load default dictionary:
@@ -32,7 +38,7 @@ spell.load({input: './my_custom_dictionary.txt', charset: 'windows-1251'})
 spell.load({input: 'ru', time: false})
 ```
 
- List of default dictionaries
+**List of default dictionaries:**
 * `en` — list of English words
 * `ru` — list of Rissian words
 * `ru_surnames` — list of Russian surnames
@@ -53,7 +59,7 @@ spell.check('Some text to check, blahblahblah, olololo')
 **Example:**
 ```js
 spell.load('en');
-// ...
+
 spell.clear();
 spell.check('something');
 // -> ERROR! Dictionaries are not loaded
