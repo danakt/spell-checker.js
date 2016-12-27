@@ -8,11 +8,9 @@ Simple expandable tool for spell checking
 * English
 * Russain
 
-
 ## Quickstart
 **Install:**  
 `npm i spell-checker`
-
 
 **Code**
 ```js
@@ -33,7 +31,7 @@ spell.check('Some text to check, blahblahblah, olololo')
 **Examples:**
 ```js
 // load default dictionary:
-spell.load('en');
+spell.load('ru');
 
 //laod cutom dictionary:
 spell.load('./my_custom_dictionary.txt');
@@ -42,7 +40,7 @@ spell.load('./my_custom_dictionary.txt');
 spell.load({input: './my_custom_dictionary.txt', charset: 'windows-1251'})
 
 // load default dictionary with disable time logs
-spell.load({input: 'ru', time: false})
+spell.load({input: 'en', time: false})
 ```
 
 **List of default dictionaries:**
@@ -52,7 +50,7 @@ spell.load({input: 'ru', time: false})
 
 You can help by adding other languages or expand existing dictionaries
 
-#### `spell.check(sting)` — spell checking of text
+#### `spell.check(string)` — spell checking of text
 **Returns:** array of wrong words  
 **Example:**
 ```js
