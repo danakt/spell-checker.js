@@ -6,7 +6,7 @@ Simple expandable tool for spell checking
 
 ## Supported languages
 * English
-* Russain
+* Russian
 
 ## Quickstart
 **Install:**  
@@ -26,17 +26,17 @@ spell.check('Some text to check, blahblahblah, olololo')
 
 ## Methods
 #### `spell.load(dic)` — load dictionary file
-**WARNING:** Too large files can increase speed of script initialization  
+**WARNING:** Too large files can increase speed of the script initialization  
 
 **Examples:**
 ```js
 // load default dictionary:
 spell.load('ru');
 
-//laod cutom dictionary:
+//load custom dictionary:
 spell.load('./my_custom_dictionary.txt');
 
-// laod cutom dictionary with charset:
+// laod custom dictionary with charset:
 spell.load({input: './my_custom_dictionary.txt', charset: 'windows-1251'})
 
 // load default dictionary with disable time logs
@@ -45,7 +45,7 @@ spell.load({input: 'en', time: false})
 
 **List of default dictionaries:**
 * `en` — list of English words
-* `ru` — list of Rissian words
+* `ru` — list of Russian words
 * `ru_surnames` — list of Russian surnames
 
 You can help by adding other languages or expand existing dictionaries
