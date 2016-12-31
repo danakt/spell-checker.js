@@ -1,0 +1,3 @@
+[submodule "dictionaries/ru"]
+	path = dictionaries/ru
+	url = ../russian-dictionary.git
