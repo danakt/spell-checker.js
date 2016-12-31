@@ -10,15 +10,15 @@ var dictionaryIsLoaded = false;
 // Default dictionaries
 var dictionaries = {
     ru: {
-        src: __dirname + '/dictionaries/russian.dic',
+        src: __dirname + '/dictionaries/ru/russian.txt',
         charset: 'windows-1251'
     },
     ru_surnames: {
-        src: __dirname + '/dictionaries/russian_surnames.dic',
+        src: __dirname + '/dictionaries/ru/russian_surnames.txt',
         charset: 'windows-1251'
     },
     en: {
-        src: __dirname + '/dictionaries/english.dic',
+        src: __dirname + '/dictionaries/en/english.txt',
         charset: 'windows-1252'
     },
 };
@@ -132,7 +132,7 @@ function checkWord(word, recblock) {
 // -----------------------------------------------------------------------------
 var spellcheck   = {
     check: check,
-    load: load, 
+    load: load,
     clear: clear
 };
 
