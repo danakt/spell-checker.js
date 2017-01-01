@@ -1,4 +1,4 @@
 [submodule "dictionaries/ru"]
     path = dictionaries/ru
     url = https://github.com/danakt/russian-words.git
-    branch = origin/master
+    branch = master
