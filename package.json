@@ -15,7 +15,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/danakt/spell-checker-js.git"
+    "url": "git+https://github.com/danakt/spell-checker.js.git"
   },
   "keywords": [
     "spell", "spellcheck", "spellchecker", "language", "russian", "english"
@@ -23,6 +23,6 @@
   "author": "Danakt Frost <mail@danakt.ru>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/danakt/spell-checker-js/issues"
+    "url": "https://github.com/danakt/spell-checker.js/issues"
   }
 }
