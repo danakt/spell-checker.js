@@ -1,11 +1,11 @@
-'use strict';
-const fs    = require('fs');
-const iconv = require('iconv-lite');
+'use strict'
+const fs    = require('fs')
+const iconv = require('iconv-lite')
 
 // Main object with words
-var WORDS = {};
+var WORDS = new Set()
 
-var dictionaryIsLoaded = false;
+var dictionaryIsLoaded = false
 
 // Default dictionaries
 var dictionaries = {
@@ -21,121 +21,123 @@ var dictionaries = {
         src: __dirname + '/dictionaries/en/english.txt',
         charset: 'windows-1252'
     },
-};
+}
 
 // Dictionary input ------------------------------------------------------------
 function load(input, charset, time) {
     if(typeof input === 'object') {
-        var {input, charset, time} = input;
+        var {input, charset, time} = input
     }
 
-    if(time == null) time = true;
+    if(time == null) time = true
 
-    var filenameArr = input.split(/[\\\/]/g);
-    var filename    = filenameArr[filenameArr.length - 1];
+    var filenameArr = input.split(/[\\\/]/g)
+    var filename    = filenameArr[filenameArr.length - 1]
 
-    time && console.time(`Loaded dictionaries: «${filename}»`);
+    time && console.time(`Loaded dictionaries: «${filename}»`)
 
     if(charset == null)
-        charset = 'utf8';
+        charset = 'utf8'
 
     if(dictionaries[input] != null) {
-        charset = dictionaries[input].charset;
-        input   = dictionaries[input].src;
+        charset = dictionaries[input].charset
+        input   = dictionaries[input].src
     }
 
     if(!fs.existsSync(input)) {
-        console.error('ERROR! File does not exist');
-        return;
+        console.error('ERROR! File does not exist')
+        return
     }
 
-    var file   = fs.readFileSync(input);
-    var buffer = Buffer.from(file);
-    var list   = iconv.decode(buffer, charset).split('\n');
+    var file   = fs.readFileSync(input)
+    var buffer = Buffer.from(file)
+    var list   = iconv.decode(buffer, charset).split('\n')
 
     for (var i = 0; i < list.length; i++) {
-        if(list[i].trim() !== '' && list[i][0] !== '#') {
-            WORDS[list[i].trim()] = true;
+        let item = list[i].trim()
+
+        if(item.trim() !== '' && item[0] !== '#') {
+            WORDS.add(item)
         }
     }
 
-    dictionaryIsLoaded = true;
+    dictionaryIsLoaded = true
 
-    time && console.timeEnd(`Loaded dictionaries: «${filename}»`);
+    time && console.timeEnd(`Loaded dictionaries: «${filename}»`)
 }
 
 // Clear dictionaries ----------------------------------------------------------
 function clear() {
-    WORDS = {}
-    dictionaryIsLoaded = false;
+    WORDS.clear()
+    dictionaryIsLoaded = false
 }
 
 // Text spell checking ---------------------------------------------------------
 function check(text) {
     if(!dictionaryIsLoaded) {
-        console.error('ERROR! Dictionaries are not loaded');
-        return;
+        console.error('ERROR! Dictionaries are not loaded')
+        return
     }
 
     var textArr = text
         .replace(/[^А-яA-z0-9'\- ]/g, ' ')
         .split(' ')
-        .filter(item => item);
+        .filter(item => item)
 
-    var outObj = {};
+    var outObj = {}
 
     for (var i = 0; i < textArr.length; i++) {
-        var checked = checkWord(textArr[i]);
-        var checkedList = Array.isArray(checked) ? checked : [checked];
+        var checked = checkWord(textArr[i])
+        var checkedList = Array.isArray(checked) ? checked : [checked]
 
         for (var j = 0; j < checkedList.length; j++) {
             if(checkedList[j] == null) {
-                outObj[textArr[i]] = true;
+                outObj[textArr[i]] = true
             }
         }
     }
 
-    return Object.keys(outObj);
+    return Object.keys(outObj)
 }
 
 // Word spell checking ---------------------------------------------------------
 // true, null, или массив
-var as = 0;
+var as = 0
 function checkWord(word, recblock) {
     // Just go away, if the word is not literal
     if(word == null || word === '' || !isNaN(+ word))
-        return null;
+        return null
 
     // If the word exists, returns true
-    if(WORDS[word] != null)
-        return true;
+    if(WORDS.has(word))
+        return true
 
     // Try to remove the case
-    if(WORDS[word.toLowerCase()] != null)
-        return true;
+    if(WORDS.has(word.toLowerCase()))
+        return true
 
     // Check for the presence of the add. chars
-    var esymb = '-/\'';
+    var esymb = '-/\''
 
     for (var i = 0; i < esymb.length; i++) {
         if(recblock !== true && word.indexOf(esymb[i]) > -1) {
             return word.split(esymb[i]).map((item, i) => {
                 return i == 0
                     ? checkWord(item, true)
-                    : checkWord(item, true) || checkWord(esymb[i] + item, true);
-            });
+                    : checkWord(item, true) || checkWord(esymb[i] + item, true)
+            })
         }
     }
 
-    return null;
+    return null
 }
 // -----------------------------------------------------------------------------
 var spellcheck   = {
     check: check,
     load: load,
     clear: clear
-};
+}
 
 if(typeof module !== 'undefined' && module.exports) {
-    module.exports = spellcheck;
+    module.exports = spellcheck
 }
