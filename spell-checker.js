@@ -47,17 +47,12 @@ function load(input, charset, time) {
         return
     }
 
-    var file   = fs.readFileSync(input)
-    var buffer = Buffer.from(file)
-    var list   = iconv.decode(buffer, charset).split('\n')
+    var file = fs.readFileSync(input)
+    var list = iconv.decode(file, charset)
+        .split('\n')
 
-    for (var i = 0; i < list.length; i++) {
-        let item = list[i].trim()
-
-        if(item.trim() !== '' && item[0] !== '#') {
-            WORDS.add(item)
-        }
-    }
+    for (let i = 0; i < list.length; i++)
+        WORDS.add(list[i])
 
     dictionaryIsLoaded = true
 
@@ -99,11 +94,14 @@ function check(text) {
 }
 
 // Word spell checking ---------------------------------------------------------
-// true, null, или массив
 function checkWord(word, recblock) {
     // Just go away, if the word is not literal
     if(word == null || word === '' || !isNaN(+ word))
         return null
+
+    // Way of reducing the load-time of dictionary
+    // Post-escaping comments from files
+    word = word.replace(/^#/, '');
 
     // If the word exists, returns true
     if(WORDS.has(word))
@@ -128,13 +126,12 @@ function checkWord(word, recblock) {
 
     return null
 }
-// -----------------------------------------------------------------------------
-var spellcheck   = {
-    check: check,
-    load: load,
-    clear: clear
-}
 
-if(typeof module !== 'undefined' && module.exports) {
-    module.exports = spellcheck
+// Export ----------------------------------------------------------------------
+if(typeof module !== 'undefined' && 'exports' in module) {
+    module.exports = {
+        check: check,
+        load: load,
+        clear: clear
+    }
 }
