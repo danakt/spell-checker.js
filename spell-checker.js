@@ -1,12 +1,10 @@
-'use strict'
 const fs    = require('fs')
 const iconv = require('iconv-lite')
 
 // Main object with words
 var WORDS = new Set()
-
+// Dictionary load flag
 var dictionaryIsLoaded = false
-
 // Default dictionaries
 var dictionaries = {
     ru: {
