@@ -100,7 +100,6 @@ function check(text) {
 
 // Word spell checking ---------------------------------------------------------
 // true, null, или массив
-var as = 0
 function checkWord(word, recblock) {
     // Just go away, if the word is not literal
     if(word == null || word === '' || !isNaN(+ word))
