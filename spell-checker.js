@@ -8,15 +8,15 @@ var dictionaryIsLoaded = false
 // Default dictionaries
 var dictionaries = {
     ru: {
-        src: __dirname + '/dictionaries/ru/russian.txt',
+        src: './dictionaries/ru/russian.txt',
         charset: 'windows-1251'
     },
     ru_surnames: {
-        src: __dirname + '/dictionaries/ru/russian_surnames.txt',
+        src: './dictionaries/ru/russian_surnames.txt',
         charset: 'windows-1251'
     },
     en: {
-        src: __dirname + '/dictionaries/en/english.txt',
+        src: './dictionaries/en/english.txt',
         charset: 'windows-1252'
     },
 }
@@ -48,11 +48,14 @@ function load(input, charset, time) {
     }
 
     var file = fs.readFileSync(input)
-    var list = iconv.decode(file, charset)
-        .split('\n')
+    var text = iconv.decode(file, charset)
 
-    for (let i = 0; i < list.length; i++)
-        WORDS.add(list[i])
+    var list = text.split('\n')
+
+    let i = 0;
+    while (i < list.length) {
+        WORDS.add(list[i++].trim())
+    }
 
     dictionaryIsLoaded = true
 
@@ -97,7 +100,7 @@ function check(text) {
 function checkWord(word, recblock) {
     // Just go away, if the word is not literal
     if(word == null || word === '' || !isNaN(+ word))
-        return null
+        return
 
     // Way of reducing the load-time of dictionary
     // Post-escaping comments from files
@@ -114,7 +117,7 @@ function checkWord(word, recblock) {
     // Check for the presence of the add. chars
     var esymb = '-/\''
 
-    for (var i = 0; i < esymb.length; i++) {
+    for (let i = 0; i < esymb.length; i++) {
         if(recblock !== true && word.indexOf(esymb[i]) > -1) {
             return word.split(esymb[i]).map((item, i) => {
                 return i == 0
@@ -123,15 +126,13 @@ function checkWord(word, recblock) {
             })
         }
     }
-
-    return null
 }
 
 // Export ----------------------------------------------------------------------
 if(typeof module !== 'undefined' && 'exports' in module) {
     module.exports = {
         check: check,
-        load: load,
+        load:  load,
         clear: clear
     }
 }
