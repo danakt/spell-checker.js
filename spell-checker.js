@@ -1,62 +1,16 @@
-const fs    = require('fs')
-const iconv = require('iconv-lite')
+const iconv    = require('iconv-lite')
+const readDict = require('./read-dictionary')
 
 // Main object with words
 var WORDS = new Set()
 // Dictionary load flag
 var dictionaryIsLoaded = false
-// Default dictionaries
-var dictionaries = {
-    ru: {
-        src: './dictionaries/ru/russian.txt',
-        charset: 'windows-1251'
-    },
-    ru_surnames: {
-        src: './dictionaries/ru/russian_surnames.txt',
-        charset: 'windows-1251'
-    },
-    en: {
-        src: './dictionaries/en/english.txt',
-        charset: 'windows-1252'
-    },
-}
 
 // Dictionary input ------------------------------------------------------------
 function load(input, charset, time) {
-    if(typeof input === 'object') {
-        var {input, charset, time} = input
-    }
-
-    if(time == null) time = true
-
-    var filenameArr = input.split(/[\\\/]/g)
-    var filename    = filenameArr[filenameArr.length - 1]
-
     time && console.time(`Loaded dictionaries: «${filename}»`)
 
-    if(charset == null)
-        charset = 'utf8'
-
-    if(dictionaries[input] != null) {
-        charset = dictionaries[input].charset
-        input   = dictionaries[input].src
-    }
-
-    if(!fs.existsSync(input)) {
-        console.error('ERROR! File does not exist')
-        return
-    }
-
-    var file = fs.readFileSync(input)
-    var text = iconv.decode(file, charset)
-
-    var list = text.split('\n')
-
-    let i = 0;
-    while (i < list.length) {
-        WORDS.add(list[i++].trim())
-    }
-
+    WORDS = readDict(input, charset)
     dictionaryIsLoaded = true
 
     time && console.timeEnd(`Loaded dictionaries: «${filename}»`)
