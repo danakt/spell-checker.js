@@ -1,8 +1,8 @@
 {
   "name": "spell-checker-js",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Simple expandable tool for spell checking",
-  "main": "spell-checker.js",
+  "main": "bin/spell-checker.js",
   "dependencies": {
     "iconv-lite": "^0.4.15"
   },
