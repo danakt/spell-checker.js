@@ -1,4 +1,4 @@
-const spell  = require('../spell-checker')
+const spell  = require('../bin/spell-checker')
 const expect = require('chai').expect
 
 

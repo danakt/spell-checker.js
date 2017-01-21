@@ -19,8 +19,6 @@ var dictionaries = {
 
 // Reading of dictionary -------------------------------------------------------
 module.exports = (input, charset) => {
-    let words = new Set()
-
     if(typeof input === 'object') {
         var {input, charset, time} = input
     }
@@ -44,12 +42,7 @@ module.exports = (input, charset) => {
 
     let file = fs.readFileSync(input)
     let text = iconv.decode(file, charset)
-    let list = text.split('\n')
-
-    let i = 0;
-    while (i < list.length) {
-        words.add(list[i++].trim())
-    }
+    let words = new Set(text.split('\n'))
 
     return words
 }
