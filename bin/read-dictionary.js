@@ -40,9 +40,14 @@ module.exports = (input, charset) => {
         return
     }
 
-    let file = fs.readFileSync(input)
-    let text = iconv.decode(file, charset)
-    let words = new Set(text.split('\n'))
+    let file  = fs.readFileSync(input)
+    let text  = iconv.decode(file, charset)
+    let list  = text.split('\n')
+    let words = new Set()
+
+    for (let i = 0; i < list.length; i++) {
+        words.add(list[i])
+    }
 
     return words
 }
