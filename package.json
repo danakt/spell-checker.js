@@ -12,7 +12,7 @@
     "mocha": "^3.2.0"
   },
   "scripts": {
-    "test": "mocha -c"
+    "test": "mocha -c -t 2500"
   },
   "repository": {
     "type": "git",
