@@ -6,7 +6,7 @@ const spell  = require('../bin/spell-checker')
 describe('English dictionary', () => {
     it('Load dictionary', () => {
         spell.clear()
-        spell.load({ input: 'en' })
+        spell.load('en')
     })
 
     it('Spell checking', () => {
@@ -57,7 +57,7 @@ describe('English dictionary', () => {
 describe('Russian dictionary', () => {
     it('Load dictionary', () => {
         spell.clear()
-        spell.load({ input: 'ru' })
+        spell.load('ru')
     })
 
     it('Spell checking', () => {
@@ -106,7 +106,7 @@ describe('Russian dictionary', () => {
 describe('Russian surnames dictionary', () => {
     it('Load dictionary', () => {
         spell.clear()
-        spell.load({ input: 'ru_surnames' })
+        spell.load('ru_surnames')
     })
 
     it('Spell checking', () => {
@@ -123,9 +123,7 @@ describe('Russian surnames dictionary', () => {
 describe('Custom dictionary', () => {
     it('Load dictionary', () => {
         spell.clear()
-        spell.load({
-            input: './test/test_dict.txt'
-        })
+        spell.load('./test/test_dict.txt')
     })
 
     it('Spell checking', () => {
@@ -138,30 +136,26 @@ describe('Custom dictionary', () => {
 });
 
 // Compare dictionaries --------------------------------------------------------
-describe('Combined English and Russian dictionaries', () => {
+describe('Combined English and custom dictionaries', () => {
     it('Load dictionaries', () => {
 
         spell.clear()
         spell.load('en')
-        spell.load('ru')
+        spell.load('./test/test_dict.txt')
     })
 
     it('Spell checking', () => {
-        expect(spell.check('Приступая')).to.have.length(0)
-        expect(spell.check('к доказательству')).to.have.length(0)
-        expect(spell.check('следует')).to.have.length(0)
-        expect(spell.check('заявить')).to.have.length(0)
-        expect(spell.check('что лемма неоднозначна')).to.have.length(0)
-
         expect(spell.check('London')).to.have.length(0)
         expect(spell.check('is')).to.have.length(0)
         expect(spell.check('the')).to.have.length(0)
         expect(spell.check('capital')).to.have.length(0)
         expect(spell.check('of Great Britain')).to.have.length(0)
-
+        expect(spell.check('Γεια')).to.have.length(0)
+        expect(spell.check('καλός')).to.have.length(0)
 
         expect(spell.check('Блаблабла')).to.have.length(1)
         expect(spell.check('Blahblahblah blahblah')).to.have.length(2)
         expect(spell.check('γαμημένος')).to.have.length(1)
+
     })
 });
