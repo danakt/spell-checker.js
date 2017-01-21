@@ -91,4 +91,4 @@ console.log(spell.size);
 ```
 
 ## License
-MIT (c) 2016 Danakt Frost
+MIT © 2016 Danakt Frost
