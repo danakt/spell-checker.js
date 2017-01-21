@@ -20,12 +20,14 @@ const spell = require('spell-checker-js');
 spell.load('en');
 
 // Checking text
-spell.check('Some text to check, blahblahblah, olololo')
+let check = spell.check('Some text to check, blahblahblah, olololo')
+
+console.log(check);
 // -> ['blahblahblah', 'olololo']
 ```
 
-## Methods
-#### `spell.load(dic)` — load dictionary file
+## Methods & properties
+#### `spell.load(dictionary)` or `spell.load(options)` — load dictionary file
 **WARNING:** Too large files can increase speed of the script initialization  
 
 **Examples:**
@@ -37,10 +39,15 @@ spell.load('ru');
 spell.load('./my_custom_dictionary.txt');
 
 // laod custom dictionary with charset:
-spell.load({input: './my_custom_dictionary.txt', charset: 'windows-1251'})
+spell.load({
+    input: './my_custom_dictionary.txt',
+    charset: 'windows-1251'
+ })
 
-// load default dictionary with disable time logs
-spell.load({input: 'en', time: false})
+// load default dictionary with utf-8:
+spell.load({
+    input: 'en'
+})
 ```
 
 **List of default dictionaries:**
@@ -56,7 +63,9 @@ You can help by adding other languages or expand existing dictionaries
 ```js
 spell.load('en');
 
-spell.check('Some text to check, blahblahblah, olololo')
+let check = spell.check('Some text to check, blahblahblah, olololo')
+
+console.log(check);
 // -> ['blahblahblah', 'olololo']
 ```
 
@@ -67,5 +76,19 @@ spell.load('en');
 
 spell.clear();
 spell.check('something');
+
 // -> ERROR! Dictionaries are not loaded
 ```
+
+#### `spell.size` — number of words in the dictionary are
+**Example**
+```js
+spell.load('en')
+spell.load('ru')
+
+console.log(spell.size);
+// -> 1956898
+```
+
+## License
+MIT (c) 2016 Danakt Frost
