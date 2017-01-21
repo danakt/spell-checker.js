@@ -1,10 +1,11 @@
 {
   "name": "spell-checker-js",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Simple expandable tool for spell checking",
   "main": "bin/spell-checker.js",
   "dependencies": {
-    "iconv-lite": "^0.4.15"
+    "iconv-lite": "^0.4.15",
+    "xregexp": "^3.1.1"
   },
   "devDependencies": {
     "chai": "^3.5.0",
@@ -18,7 +19,12 @@
     "url": "git+https://github.com/danakt/spell-checker.js.git"
   },
   "keywords": [
-    "spell", "spellcheck", "spellchecker", "language", "russian", "english"
+    "spell",
+    "spellcheck",
+    "spellchecker",
+    "language",
+    "russian",
+    "english"
   ],
   "author": "Danakt Frost <mail@danakt.ru>",
   "license": "MIT",

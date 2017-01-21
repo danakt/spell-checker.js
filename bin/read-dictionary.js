@@ -1,4 +1,5 @@
 const fs    = require('fs')
+const path  = require('path')
 const iconv = require('iconv-lite')
 
 // Default dictionaries --------------------------------------------------------
@@ -18,36 +19,40 @@ var dictionaries = {
 }
 
 // Reading of dictionary -------------------------------------------------------
-module.exports = (input, charset) => {
-    if(typeof input === 'object') {
-        var {input, charset, time} = input
-    }
-
-    if(time == null) time = true
-    if(charset == null) charset = 'utf8'
-
-    let filenameArr = input.split(/[\\\/]/g)
-    let filename    = filenameArr[filenameArr.length - 1]
-
-
+module.exports = (input, charset, prevlist) => {
     if(dictionaries[input] != null) {
         charset = dictionaries[input].charset
         input   = dictionaries[input].src
     }
 
+    // For addng to prev dictionary
+    let words = prevlist
+
+    // Log error if file is not exists
     if(!fs.existsSync(input)) {
-        console.error('ERROR! File does not exist')
-        return
+        console.error(`ERROR! File "${input}" does not exist`)
+        return { words, len: 0 }
     }
 
-    let file  = fs.readFileSync(input)
-    let text  = iconv.decode(file, charset)
+    // Reading and convert file
+    let buff = fs.readFileSync(path.resolve(input))
+    let text = iconv.decode(buff, charset)
+
     let list  = text.split('\n')
-    let words = new Set()
-
-    for (let i = 0; i < list.length; i++) {
-        words.add(list[i])
+    let len   = list.length
+    // Remove last item if is empty
+    if(list[len - 1] === '') {
+        len--
     }
 
-    return words
+    // Add to collection
+    let i = 0
+    while (i < len) {
+        words.add(list[i++])
+    }
+
+    // Remove empty element
+    words.delete('')
+
+    return { words, size: len }
 }

@@ -1,46 +1,62 @@
+/**
+ * Spell-checker.js
+ * @desc Simple expandable tool for spell checking
+ * @author Danakt Frost <mail@danakt.ru>
+ *
+ * @todo
+ *   Make async load dictionaries
+ *   Add support word prefixes (авто...)
+ */
+
 const iconv    = require('iconv-lite')
+const XRegExp  = require('xregexp')
 const readDict = require('./read-dictionary')
 
 // Main object with words
 var WORDS = new Set()
-// Dictionary load flag
-var dictionaryIsLoaded = false
+var SIZE  = 0
 
 // Dictionary input ------------------------------------------------------------
-function load(input, charset, time) {
-    time && console.time(`Loaded dictionaries: «${filename}»`)
+function load(input, charset) {
+    // Getting arguments
+    if(input.constructor === Object) {
+        var { input, charset } = input
+    }
 
-    WORDS = readDict(input, charset)
-    dictionaryIsLoaded = true
-
-    time && console.timeEnd(`Loaded dictionaries: «${filename}»`)
+    // Read dictionary file
+    let dict = readDict(input, charset || 'utf8', WORDS)
+    WORDS = dict.words
+    SIZE += dict.size
 }
 
 // Clear dictionaries ----------------------------------------------------------
 function clear() {
     WORDS.clear()
-    dictionaryIsLoaded = false
+    SIZE = 0
 }
 
 // Text spell checking ---------------------------------------------------------
 function check(text) {
-    if(!dictionaryIsLoaded) {
+    if(SIZE === 0) {
         console.error('ERROR! Dictionaries are not loaded')
         return
     }
 
-    var textArr = text
-        .replace(/[^А-яA-z0-9'\- ]/g, ' ')
+    let regex = new XRegExp('[^\\p{N}\\p{L}-_]', 'g')
+    let textArr = text
+        .replace(regex, ' ')
         .split(' ')
         .filter(item => item)
 
-    var outObj = {}
+    let outObj = {}
 
-    for (var i = 0; i < textArr.length; i++) {
-        var checked = checkWord(textArr[i])
-        var checkedList = Array.isArray(checked) ? checked : [checked]
+    for (let i = 0; i < textArr.length; i++) {
+        let checked = checkWord(textArr[i])
+        let checkedList = Array.isArray(checked)
+            ? checked
+            : [checked]
 
-        for (var j = 0; j < checkedList.length; j++) {
+        for (let j = 0; j < checkedList.length; j++) {
             if(checkedList[j] == null) {
                 outObj[textArr[i]] = true
             }
@@ -69,15 +85,16 @@ function checkWord(word, recblock) {
         return true
 
     // Check for the presence of the add. chars
-    var esymb = '-/\''
+    let esymb = '-/\''
 
     for (let i = 0; i < esymb.length; i++) {
         if(recblock !== true && word.indexOf(esymb[i]) > -1) {
-            return word.split(esymb[i]).map((item, i) => {
-                return i == 0
+            return word
+                .split(esymb[i])
+                .map((item, i) => i == 0
                     ? checkWord(item, true)
                     : checkWord(item, true) || checkWord(esymb[i] + item, true)
-            })
+                )
         }
     }
 }
@@ -87,6 +104,12 @@ if(typeof module !== 'undefined' && 'exports' in module) {
     module.exports = {
         check: check,
         load:  load,
-        clear: clear
+        clear: clear,
+        get size() {
+            return SIZE
+        },
+        get words() {
+            return WORDS
+        }
     }
 }
