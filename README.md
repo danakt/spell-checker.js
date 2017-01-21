@@ -27,7 +27,7 @@ console.log(check);
 ```
 
 ## Methods & properties
-#### `spell.load(dictionary)` or `spell.load(options)` — load dictionary file
+### `spell.load(dictionary)` or `spell.load(options)` — load dictionary file
 **WARNING:** Too large files can increase speed of the script initialization  
 
 **Examples:**
@@ -57,7 +57,7 @@ spell.load({
 
 You can help by adding other languages or expand existing dictionaries
 
-#### `spell.check(string)` — spell checking of text
+### `spell.check(string)` — spell checking of text
 **Returns:** array of wrong words  
 **Example:**
 ```js
@@ -69,7 +69,7 @@ console.log(check);
 // -> ['blahblahblah', 'olololo']
 ```
 
-#### `spell.clear()` — clear all loaded dictionaries
+### `spell.clear()` — clear all loaded dictionaries
 **Example:**
 ```js
 spell.load('en');
@@ -80,7 +80,7 @@ spell.check('something');
 // -> ERROR! Dictionaries are not loaded
 ```
 
-#### `spell.size` — number of words in the dictionary are
+### `spell.size` — number of words in the dictionary are
 **Example**
 ```js
 spell.load('en')
