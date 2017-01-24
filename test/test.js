@@ -4,12 +4,7 @@ const spell  = require('../bin/spell-checker')
 
 // English dictionary ----------------------------------------------------------
 describe('English dictionary', () => {
-    it('Load dictionary', () => {
-        spell.clear()
-        spell.load('en')
-    })
-
-    it('Spell checking', () => {
+    let spellchecking = index => it(`Spell checking #${index}`, () => {
         expect(spell.check('London')).to.have.length(0)
         expect(spell.check('is')).to.have.length(0)
         expect(spell.check('the')).to.have.length(0)
@@ -21,6 +16,23 @@ describe('English dictionary', () => {
         expect(spell.check('Hello')).to.have.length(0)
         expect(spell.check('Привет всем')).to.have.length(2)
     })
+
+    it('Load dictionary', () => {
+        spell.clear()
+        spell.load('en')
+    })
+
+    spellchecking(1)
+
+    it('Aynsc load dictionary', done => {
+        spell.clear()
+
+        spell.load({ input: 'en', async: true }).then(res => {
+            if(res) done()
+        }, done)
+    })
+
+    spellchecking(2)
 
     it('Spell checking long', () => {
         let check = spell.check(
@@ -55,12 +67,7 @@ describe('English dictionary', () => {
 
 // Russian dictionary ----------------------------------------------------------
 describe('Russian dictionary', () => {
-    it('Load dictionary', () => {
-        spell.clear()
-        spell.load('ru')
-    })
-
-    it('Spell checking', () => {
+    let spellchecking = index => it(`Spell checking #${index}`, () => {
         expect(spell.check('Приступая')).to.have.length(0)
         expect(spell.check('к доказательству')).to.have.length(0)
         expect(spell.check('следует')).to.have.length(0)
@@ -72,6 +79,23 @@ describe('Russian dictionary', () => {
         expect(spell.check('Привет всем')).to.have.length(0)
         expect(spell.check('Hello')).to.have.length(1)
     })
+
+    it('Load dictionary', () => {
+        spell.clear()
+        spell.load('ru')
+    })
+
+    spellchecking(1)
+
+    it('Aynsc load dictionary', done => {
+        spell.clear()
+
+        spell.load({ input: 'ru', async: true }).then(res => {
+            if(res) done()
+        }, done)
+    })
+
+    spellchecking(2)
 
     it('Spell checking long', () => {
         let check = spell.check(
@@ -104,12 +128,7 @@ describe('Russian dictionary', () => {
 
 // Russian surnames dictionary -------------------------------------------------
 describe('Russian surnames dictionary', () => {
-    it('Load dictionary', () => {
-        spell.clear()
-        spell.load('ru_surnames')
-    })
-
-    it('Spell checking', () => {
+    let spellchecking = index => it(`Spell checking #${index}`, () => {
         expect(spell.check('Иванов')).to.have.length(0)
         expect(spell.check('Петров')).to.have.length(0)
         expect(spell.check('Сидоров')).to.have.length(0)
@@ -117,34 +136,55 @@ describe('Russian surnames dictionary', () => {
         expect(spell.check('Блаблабла')).to.have.length(1)
         expect(spell.check('не фамилия')).to.have.length(2)
     })
+
+    it('Load dictionary', () => {
+        spell.clear()
+        spell.load('ru_surnames')
+    })
+
+    spellchecking(1)
+
+    it('Aynsc load dictionary', done => {
+        spell.clear()
+
+        spell.load({ input: 'ru_surnames', async: true }).then(res => {
+            if(res) done()
+        }, done)
+    })
+
+    spellchecking(2)
 })
 
 // Custom dictionary -----------------------------------------------------------
 describe('Custom dictionary', () => {
+    let spellchecking = index => it(`Spell checking #${index}`, () => {
+        expect(spell.check('Γεια')).to.have.length(0)
+        expect(spell.check('καλός')).to.have.length(0)
+
+        expect(spell.check('γαμημένος')).to.have.length(1)
+    })
+
     it('Load dictionary', () => {
         spell.clear()
         spell.load('./test/test_dict.txt')
     })
 
-    it('Spell checking', () => {
-        expect(spell.check('Γεια')).to.have.length(0)
-        expect(spell.check('καλός')).to.have.length(0)
+    spellchecking(1)
 
-        expect(spell.check('γαμημένος')).to.have.length(1)
+    it('Aynsc load dictionary', done => {
+        spell.clear()
 
+        spell.load({ input: './test/test_dict.txt', async: true }).then(res => {
+            if(res) done()
+        }, done)
     })
+
+    spellchecking(2)
 });
 
 // Compare dictionaries --------------------------------------------------------
 describe('Combined English and custom dictionaries', () => {
-    it('Load dictionaries', () => {
-
-        spell.clear()
-        spell.load('en')
-        spell.load('./test/test_dict.txt')
-    })
-
-    it('Spell checking', () => {
+    let spellchecking = index => it(`Spell checking #${index}`, () => {
         expect(spell.check('London')).to.have.length(0)
         expect(spell.check('is')).to.have.length(0)
         expect(spell.check('the')).to.have.length(0)
@@ -158,4 +198,32 @@ describe('Combined English and custom dictionaries', () => {
         expect(spell.check('γαμημένος')).to.have.length(1)
 
     })
+
+    it('Load dictionaries', () => {
+        spell.clear()
+        spell.load('en')
+        spell.load('./test/test_dict.txt')
+    })
+
+    spellchecking(1)
+
+    it('Aynsc load dictionaries', done => {
+        spell.clear()
+
+        Promise.all([
+            spell.load({ input: 'en', async: true }),
+            spell.load({ input: './test/test_dict.txt', async: true })
+        ]).then(resArr => {
+            for(let res of resArr) {
+                if(!res) {
+                    done('Error')
+                    return
+                }
+            }
+
+            done()
+        }, done)
+    })
+
+    spellchecking(2)
 });

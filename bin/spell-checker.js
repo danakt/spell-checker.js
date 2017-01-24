@@ -16,17 +16,38 @@ const readDict = require('./read-dictionary')
 var WORDS = new Set()
 var SIZE  = 0
 
-// Dictionary input ------------------------------------------------------------
+// Load dictionary -------------------------------------------------------------
 function load(input, charset) {
     // Getting arguments
     if(input.constructor === Object) {
-        var { input, charset } = input
+        var { input, charset, async } = input
     }
 
     // Read dictionary file
-    let dict = readDict(input, charset || 'utf8', WORDS)
-    WORDS = dict.words
-    SIZE += dict.size
+    let dict = readDict({
+        input,
+        async,
+        charset: charset || 'utf8',
+        words:   WORDS
+    })
+
+    if(async) {
+        return new Promise((resolve, reject) => {
+            dict.then(resp => {
+                WORDS = resp.words
+                SIZE += resp.size
+
+                resolve(resp.size)
+            }, err => {
+                reject(err)
+            })
+        })
+    } else {
+        WORDS = dict.words
+        SIZE += dict.size
+
+        return dict.size
+    }
 }
 
 // Clear dictionaries ----------------------------------------------------------
@@ -74,7 +95,7 @@ function checkWord(word, recblock) {
 
     // Way of reducing the load-time of dictionary
     // Post-escaping comments from files
-    word = word.replace(/^#/, '');
+    word = word.replace(/^#/, '')
 
     // If the word exists, returns true
     if(WORDS.has(word))
@@ -102,9 +123,9 @@ function checkWord(word, recblock) {
 // Export ----------------------------------------------------------------------
 if(typeof module !== 'undefined' && 'exports' in module) {
     module.exports = {
-        check: check,
-        load:  load,
-        clear: clear,
+        check,
+        load,
+        clear,
         get size() {
             return SIZE
         },

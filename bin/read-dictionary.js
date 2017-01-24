@@ -19,14 +19,11 @@ var dictionaries = {
 }
 
 // Reading of dictionary -------------------------------------------------------
-module.exports = (input, charset, prevlist) => {
+module.exports = ({ input, async, charset, words }) => {
     if(dictionaries[input] != null) {
         charset = dictionaries[input].charset
         input   = dictionaries[input].src
     }
-
-    // For addng to prev dictionary
-    let words = prevlist
 
     // Log error if file is not exists
     if(!fs.existsSync(input)) {
@@ -34,8 +31,30 @@ module.exports = (input, charset, prevlist) => {
         return { words, len: 0 }
     }
 
+    // Synchronious loading
+    if(!async) {
+        let buff = fs.readFileSync(path.resolve(input))
+        return getWordsList({ buff, charset, words })
+    }
+
+    // Asynchronious loading
+    if(async) {
+        return new Promise((resolve, reject) => {
+            fs.readFile(path.resolve(input), function(err, buff) {
+                if(err) {
+                    reject(err)
+                    return
+                }
+
+                resolve(getWordsList({ buff, charset, words }))
+            })
+        })
+    }
+}
+
+// Get words -------------------------------------------------------------------
+function getWordsList({ buff, charset, words }) {
     // Reading and convert file
-    let buff = fs.readFileSync(path.resolve(input))
     let text = iconv.decode(buff, charset)
 
     let list  = text.split('\n')
