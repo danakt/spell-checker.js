@@ -14,39 +14,38 @@ Simple expandable tool for spell checking
 
 **Code**
 ```js
-const spell = require('spell-checker-js');
+const spell = require('spell-checker-js')
 
 // Load dictionary
-spell.load('en');
+spell.load('en')
 
 // Checking text
 let check = spell.check('Some text to check, blahblahblah, olololo')
 
-console.log(check);
+console.log(check)
 // -> ['blahblahblah', 'olololo']
 ```
 
 ## Methods & properties
 ### `spell.load(dictionary)` or `spell.load(options)` — load dictionary file
-**WARNING:** Too large files can increase speed of the script initialization  
 
 **Examples:**
 ```js
-// load default dictionary:
-spell.load('ru');
+// ways for load default dictionary:
+spell.load('ru')
+spell.load({ input: 'ru' })
 
-//load custom dictionary:
-spell.load('./my_custom_dictionary.txt');
+// load custom dictionary with utf-8:
+spell.load('./my_custom_dictionary.txt')
 
 // laod custom dictionary with charset:
-spell.load({
-    input: './my_custom_dictionary.txt',
-    charset: 'windows-1251'
- })
+spell.load({ input: './my_custom_dictionary.txt', charset: 'windows-1251' })
 
-// load default dictionary with utf-8:
-spell.load({
-    input: 'en'
+// Asynchronous load default dictionary:
+spell.load({ input: 'en', async: true }).then(len => {
+    console.log(len);
+    // len — amount of added words to base
+    spell.check('something')
 })
 ```
 
@@ -61,21 +60,21 @@ You can help by adding other languages or expand existing dictionaries
 **Returns:** array of wrong words  
 **Example:**
 ```js
-spell.load('en');
+spell.load('en')
 
 let check = spell.check('Some text to check, blahblahblah, olololo')
 
-console.log(check);
+console.log(check)
 // -> ['blahblahblah', 'olololo']
 ```
 
 ### `spell.clear()` — clear all loaded dictionaries
 **Example:**
 ```js
-spell.load('en');
+spell.load('en')
 
-spell.clear();
-spell.check('something');
+spell.clear()
+spell.check('something')
 
 // -> ERROR! Dictionaries are not loaded
 ```
@@ -86,7 +85,7 @@ spell.check('something');
 spell.load('en')
 spell.load('ru')
 
-console.log(spell.size);
+console.log(spell.size)
 // -> 1956898
 ```
 
