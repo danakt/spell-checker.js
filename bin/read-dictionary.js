@@ -1,6 +1,7 @@
 const fs    = require('fs')
 const path  = require('path')
 const iconv = require('iconv-lite')
+const getWordsList = require('./read-dictionary.node')
 
 // Default dictionaries --------------------------------------------------------
 var dictionaries = {
@@ -34,7 +35,8 @@ module.exports = ({ input, async, charset, words }) => {
     // Synchronious loading
     if(!async) {
         let buff = fs.readFileSync(path.resolve(input))
-        return getWordsList({ buff, charset, words })
+        let text = iconv.decode(buff, charset)
+        return getWordsList(text, words)
     }
 
     // Asynchronious loading
@@ -46,32 +48,9 @@ module.exports = ({ input, async, charset, words }) => {
                     return
                 }
 
-                resolve(getWordsList({ buff, charset, words }))
+                let text = iconv.decode(buff, charset)
+                resolve(getWordsList(text, words))
             })
         })
     }
-}
-
-// Get words -------------------------------------------------------------------
-function getWordsList({ buff, charset, words }) {
-    // Reading and convert file
-    let text = iconv.decode(buff, charset)
-
-    let list  = text.split('\n')
-    let len   = list.length
-    // Remove last item if is empty
-    if(list[len - 1] === '') {
-        len--
-    }
-
-    // Add to collection
-    let i = 0
-    while (i < len) {
-        words.add(list[i++])
-    }
-
-    // Remove empty element
-    words.delete('')
-
-    return { words, size: len }
 }

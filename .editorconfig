@@ -6,6 +6,6 @@ root = true
     indent_style = space
     indent_size  = 4
 
-[*.json]
+[{*.json,*.gyp}]
     indent_style = space
     indent_size  = 2
