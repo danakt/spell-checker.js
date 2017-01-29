@@ -37,7 +37,7 @@ void Parse(const FunctionCallbackInfo<Value>& args) {
     std::string item;
 
     // Перебираем вектор
-    std:double DictSize = 0; // для подсчета количества строк
+    double DictSize = 0; // для подсчета количества строк
     while (std::getline(ss, item, '\n')) {
         DictSize++;
         Words->Add(context, String::NewFromUtf8(isolate, item.c_str()));
