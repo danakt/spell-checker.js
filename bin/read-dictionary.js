@@ -1,7 +1,6 @@
 const fs    = require('fs')
 const path  = require('path')
 const iconv = require('iconv-lite')
-const getWordsList = require('./read-dictionary.node')
 
 // Default dictionaries --------------------------------------------------------
 var dictionaries = {
@@ -53,4 +52,12 @@ module.exports = ({ input, async, charset, words }) => {
             })
         })
     }
+}
+
+// Getting words list ----------------------------------------------------------
+function getWordsList(text, words) {
+    let nodeVersion = process.version.split(/[^\d]/).filter(i => i != '')[0]
+    let getWordsListFunc = require('./read-dictionary/' + nodeVersion)
+
+    return getWordsListFunc(text, words)
 }
