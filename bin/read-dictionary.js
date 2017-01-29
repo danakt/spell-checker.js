@@ -56,8 +56,8 @@ module.exports = ({ input, async, charset, words }) => {
 
 // Getting words list ----------------------------------------------------------
 function getWordsList(text, words) {
-    let nodeVersion = process.version.split(/[^\d]/).filter(i => i != '')[0]
-    let getWordsListFunc = require('./read-dictionary/' + nodeVersion)
+    let nodeVer = process.version.split(/[^\d]/).filter(i => i != '')[0]
+    let osName = process.platform.replace(/\d/g, '')
 
-    return getWordsListFunc(text, words)
+    return require('./read-dictionary/' + osName + '-' + nodeVer)(text, words)
 }
