@@ -3,6 +3,9 @@
   "version": "1.1.0",
   "description": "Simple expandable tool for spell checking",
   "main": "bin/spell-checker.js",
+  "engines": {
+    "node": ">=6.0.0"
+  },
   "dependencies": {
     "iconv-lite": "^0.4.15",
     "xregexp": "^3.1.1"
