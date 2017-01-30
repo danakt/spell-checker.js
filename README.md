@@ -1,10 +1,10 @@
 # Spell-checker.js
 Simple expandable tool for spell checking  
 
-Readme: **`English`** [`Русский`](README.RU.md)
-
 [![npm](https://img.shields.io/npm/v/spell-checker-js.svg?style=flat-square)](https://www.npmjs.com/package/spell-checker-js)
 [![Travis branch](https://img.shields.io/travis/danakt/spell-checker.js/master.svg?style=flat-square)](https://travis-ci.org/danakt/spell-checker.js)
+
+Readme: **`English`** [`Русский`](README.RU.md)
 
 ## Supported languages
 * English
