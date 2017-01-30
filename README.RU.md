@@ -70,7 +70,7 @@ console.log(check)
 // -> ['blahblahblah', 'olololo']
 ```
 
-### `spell.clear()` — удалить все подгруженные слова
+### `spell.clear()` — очистка подгруженных словрей
 **Пример:**
 ```js
 spell.load('en')
