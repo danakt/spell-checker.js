@@ -21,7 +21,8 @@
     "ts-node": "^3.3.0"
   },
   "scripts": {
-    "test": "mocha -r ts-node/register test/test.ts -t 2500 -c"
+    "test": "mocha -t 2500 -c",
+    "build": "tsc"
   },
   "repository": {
     "type": "git",
