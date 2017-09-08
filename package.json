@@ -2,7 +2,7 @@
   "name": "spell-checker-js",
   "version": "1.2.0",
   "description": "Simple expandable tool for spell checking",
-  "main": "bin/spell-checker.js",
+  "main": "index.js",
   "engines": {
     "node": ">=6.0.0"
   },
