@@ -1,28 +1,24 @@
 {
   "compilerOptions": {
-    "sourceMap": true,
+    "outDir": "./build/",
     "target": "es6",
     "module": "commonjs",
-    "jsx": "react",
     "moduleResolution": "node",
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
-    "declaration": false,
     "noImplicitAny": false,
     "noImplicitReturns": false,
     "removeComments": true,
     "strictNullChecks": false,
-    "outDir": "build",
-    "skipLibCheck": true,
     "lib": [
+      "es5",
       "es6",
-      "es7",
       "dom"
     ]
   },
   "exclude": [
+    "test",
     "dist",
     "build",
     "node_modules"
-  ]
+  ],
+  "compileOnSave": true
 }
