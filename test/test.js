@@ -1,10 +1,10 @@
-const path   = require('path')
-const expect = require('chai').expect
-const spell  = require('../bin/spell-checker')
+const path       = require('path')
+const { expect } = require('chai')
+const spell      = require('../')
 
-// English dictionary ----------------------------------------------------------
+/** English dictionary */
 describe('English dictionary', () => {
-    let spellchecking = index => it(`Spell checking #${index}`, () => {
+    const spellchecking = index => it(`Spell checking #${index}`, () => {
         expect(spell.check('London')).to.have.length(0)
         expect(spell.check('is')).to.have.length(0)
         expect(spell.check('the')).to.have.length(0)
@@ -28,14 +28,16 @@ describe('English dictionary', () => {
         spell.clear()
 
         spell.load({ input: 'en', async: true }).then(res => {
-            if(res) done()
+            if (res) {
+                done()
+            }
         }, done)
     })
 
     spellchecking(2)
 
     it('Spell checking long', () => {
-        let check = spell.check(
+        const check = spell.check(
             `Comfort reached gay perhaps chamber his six detract besides
             add. Moonlight newspaper up he it enjoyment agreeable
             depending. Timed voice share led his widen noisy young. On
@@ -65,9 +67,9 @@ describe('English dictionary', () => {
     })
 })
 
-// Russian dictionary ----------------------------------------------------------
+/** Russian dictionary */
 describe('Russian dictionary', () => {
-    let spellchecking = index => it(`Spell checking #${index}`, () => {
+    const spellchecking = index => it(`Spell checking #${index}`, () => {
         expect(spell.check('Приступая')).to.have.length(0)
         expect(spell.check('к доказательству')).to.have.length(0)
         expect(spell.check('следует')).to.have.length(0)
@@ -98,7 +100,7 @@ describe('Russian dictionary', () => {
     spellchecking(2)
 
     it('Spell checking long', () => {
-        let check = spell.check(
+        const check = spell.check(
             `Генеративная поэтика, на первый взгляд, нивелирует музыкальный
             цикл, потому что в стихах и в прозе автор рассказывает нам об
             одном и том же. Эстетическое воздействие текстологически
@@ -126,9 +128,9 @@ describe('Russian dictionary', () => {
     })
 })
 
-// Russian surnames dictionary -------------------------------------------------
+/** Russian surnames dictionary */
 describe('Russian surnames dictionary', () => {
-    let spellchecking = index => it(`Spell checking #${index}`, () => {
+    const spellchecking = index => it(`Spell checking #${index}`, () => {
         expect(spell.check('Иванов')).to.have.length(0)
         expect(spell.check('Петров')).to.have.length(0)
         expect(spell.check('Сидоров')).to.have.length(0)
@@ -148,16 +150,18 @@ describe('Russian surnames dictionary', () => {
         spell.clear()
 
         spell.load({ input: 'ru_surnames', async: true }).then(res => {
-            if(res) done()
+            if (res) {
+                done()
+            }
         }, done)
     })
 
     spellchecking(2)
 })
 
-// Custom dictionary -----------------------------------------------------------
+/** Custom dictionary */
 describe('Custom dictionary', () => {
-    let spellchecking = index => it(`Spell checking #${index}`, () => {
+    const spellchecking = index => it(`Spell checking #${index}`, () => {
         expect(spell.check('Γεια')).to.have.length(0)
         expect(spell.check('καλός')).to.have.length(0)
 
@@ -182,9 +186,9 @@ describe('Custom dictionary', () => {
     spellchecking(2)
 });
 
-// Compare dictionaries --------------------------------------------------------
+// Compare dictionaries
 describe('Combined English and custom dictionaries', () => {
-    let spellchecking = index => it(`Spell checking #${index}`, () => {
+    const spellchecking = index => it(`Spell checking #${index}`, () => {
         expect(spell.check('London')).to.have.length(0)
         expect(spell.check('is')).to.have.length(0)
         expect(spell.check('the')).to.have.length(0)
@@ -214,7 +218,7 @@ describe('Combined English and custom dictionaries', () => {
             spell.load({ input: 'en', async: true }),
             spell.load({ input: './test/test_dict.txt', async: true })
         ]).then(resArr => {
-            for(let res of resArr) {
+            for (let res of resArr) {
                 if(!res) {
                     done('Error')
                     return

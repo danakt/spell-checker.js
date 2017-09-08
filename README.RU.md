@@ -22,7 +22,7 @@ const spell = require('spell-checker-js')
 spell.load('en')
 
 // Проверка орфографии
-let check = spell.check('Some text to check, blahblahblah, olololo')
+const check = spell.check('Some text to check, blahblahblah, olololo')
 
 console.log(check)
 // -> ['blahblahblah', 'olololo']
@@ -64,7 +64,7 @@ spell.load({ input: 'en', async: true }).then(len => {
 ```js
 spell.load('en')
 
-let check = spell.check('Some text to check, blahblahblah, olololo')
+const check = spell.check('Some text to check, blahblahblah, olololo')
 
 console.log(check)
 // -> ['blahblahblah', 'olololo']

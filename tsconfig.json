@@ -1,0 +1,24 @@
+{
+  "compilerOptions": {
+    "outDir": "./dist/",
+    "target": "es5",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "noImplicitAny": false,
+    "noImplicitReturns": false,
+    "removeComments": true,
+    "strictNullChecks": false,
+    "lib": [
+      "es5",
+      "es6",
+      "dom"
+    ]
+  },
+  "exclude": [
+    "test",
+    "dist",
+    "build",
+    "node_modules"
+  ],
+  "compileOnSave": true
+}
