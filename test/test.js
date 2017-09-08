@@ -1,10 +1,10 @@
-const path       = require('path')
-const { expect } = require('chai')
-const spell      = require('../')
+var path   = require('path')
+var expect = require('chai').expect
+var spell  = require('../')
 
 /** English dictionary */
 describe('English dictionary', () => {
-    const spellchecking = index => it(`Spell checking #${index}`, () => {
+    var spellchecking = index => it(`Spell checking #${index}`, () => {
         expect(spell.check('London')).to.have.length(0)
         expect(spell.check('is')).to.have.length(0)
         expect(spell.check('the')).to.have.length(0)
@@ -218,7 +218,7 @@ describe('Combined English and custom dictionaries', () => {
             spell.load({ input: 'en', async: true }),
             spell.load({ input: './test/test_dict.txt', async: true })
         ]).then(resArr => {
-            for (let res of resArr) {
+            for (var res of resArr) {
                 if(!res) {
                     done('Error')
                     return
