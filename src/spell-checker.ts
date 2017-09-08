@@ -19,7 +19,7 @@ declare interface FileResult {
     size:  number;
 }
 
-class SpellChecker {
+export default class SpellChecker {
     /** Object for storing list and the number of words */
     private BUFFER = {
         WORDS: new Set(),
@@ -363,6 +363,3 @@ class SpellChecker {
         })
     }
 }
-
-/** @exports */
-export default new SpellChecker()
