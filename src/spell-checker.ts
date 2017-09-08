@@ -1,10 +1,3 @@
-/**
- * Spell-checker.js
- * @desc Simple expandable tool for spell checking
- * @author Danakt Frost <mail@danakt.ru>
- *
- * @todo Add support word prefixes (авто...)
- */
 import * as fs      from 'fs'
 import * as path    from 'path'
 import * as iconv   from 'iconv-lite'
