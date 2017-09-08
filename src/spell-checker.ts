@@ -10,6 +10,15 @@ import * as path    from 'path'
 import * as iconv   from 'iconv-lite'
 import * as XRegExp from 'xregexp'
 
+/**
+ * The result of file reading
+ * @interface FileResult
+ */
+declare interface FileResult {
+    words: Set<string>;
+    size:  number;
+}
+
 class SpellChecker {
     /** Object for storing list and the number of words */
     private BUFFER = {
@@ -54,7 +63,7 @@ class SpellChecker {
     public load(inputOrProps, charsetOption?) {
         const options = this.parseParams(inputOrProps, charsetOption)
 
-        // Синхронная подгрузка файла
+        // Synchronous file loading
         if (!options.async) {
             const dictionary: FileResult = this.readDictionarySync(
                 options.input,
@@ -67,7 +76,7 @@ class SpellChecker {
 
             return dictionary.size
         } else {
-            // Асинхронная подгрузка файла
+            // Asynchronous file loading
             const dictPromise: Promise<FileResult> = this.readDictionaryAsync(
                 options.input,
                 options.charset || 'utf8',
