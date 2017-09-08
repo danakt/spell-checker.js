@@ -1,6 +1,6 @@
-import * as path    from 'path'
-import { expect }   from 'chai'
-import spell        from '../src/spell-checker'
+const path       = require('path')
+const { expect } = require('chai')
+const spell      = require('../build/spell-checker')
 
 /** English dictionary */
 describe('English dictionary', () => {
