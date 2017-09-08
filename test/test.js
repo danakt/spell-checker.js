@@ -1,6 +1,6 @@
 const path       = require('path')
 const { expect } = require('chai')
-const spell      = require('../build/spell-checker')
+const spell      = require('../')
 
 /** English dictionary */
 describe('English dictionary', () => {
