@@ -1,8 +1,8 @@
-const path   = require('path')
-const expect = require('chai').expect
-const spell  = require('../bin/spell-checker')
+import * as path    from 'path'
+import { expect }   from 'chai'
+import spell        from '../src/spell-checker'
 
-// English dictionary ----------------------------------------------------------
+/** English dictionary */
 describe('English dictionary', () => {
     let spellchecking = index => it(`Spell checking #${index}`, () => {
         expect(spell.check('London')).to.have.length(0)
@@ -28,7 +28,9 @@ describe('English dictionary', () => {
         spell.clear()
 
         spell.load({ input: 'en', async: true }).then(res => {
-            if(res) done()
+            if (res) {
+                done()
+            }
         }, done)
     })
 
@@ -65,7 +67,7 @@ describe('English dictionary', () => {
     })
 })
 
-// Russian dictionary ----------------------------------------------------------
+/** Russian dictionary */
 describe('Russian dictionary', () => {
     let spellchecking = index => it(`Spell checking #${index}`, () => {
         expect(spell.check('Приступая')).to.have.length(0)
@@ -126,7 +128,7 @@ describe('Russian dictionary', () => {
     })
 })
 
-// Russian surnames dictionary -------------------------------------------------
+/** Russian surnames dictionary */
 describe('Russian surnames dictionary', () => {
     let spellchecking = index => it(`Spell checking #${index}`, () => {
         expect(spell.check('Иванов')).to.have.length(0)
@@ -148,14 +150,16 @@ describe('Russian surnames dictionary', () => {
         spell.clear()
 
         spell.load({ input: 'ru_surnames', async: true }).then(res => {
-            if(res) done()
+            if (res) {
+                done()
+            }
         }, done)
     })
 
     spellchecking(2)
 })
 
-// Custom dictionary -----------------------------------------------------------
+/** Custom dictionary */
 describe('Custom dictionary', () => {
     let spellchecking = index => it(`Spell checking #${index}`, () => {
         expect(spell.check('Γεια')).to.have.length(0)
@@ -182,7 +186,7 @@ describe('Custom dictionary', () => {
     spellchecking(2)
 });
 
-// Compare dictionaries --------------------------------------------------------
+// Compare dictionaries
 describe('Combined English and custom dictionaries', () => {
     let spellchecking = index => it(`Spell checking #${index}`, () => {
         expect(spell.check('London')).to.have.length(0)
