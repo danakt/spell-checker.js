@@ -1,5 +1,5 @@
 import * as fs      from 'fs'
-import * as path    from 'path'
+import { resolve }  from 'path'
 import * as iconv   from 'iconv-lite'
 import * as XRegExp from 'xregexp'
 
@@ -22,15 +22,15 @@ export default class SpellChecker {
     /** Default dictionaries */
     private dictionaries = {
         ru: {
-            src: './dictionaries/ru/russian.txt',
+            src: resolve(__dirname, '../dictionaries/ru/russian.txt'),
             charset: 'windows-1251'
         },
         ru_surnames: {
-            src: './dictionaries/ru/russian_surnames.txt',
+            src: resolve(__dirname, '../dictionaries/ru/russian_surnames.txt'),
             charset: 'windows-1251'
         },
         en: {
-            src: './dictionaries/en/english.txt',
+            src: resolve(__dirname, '../dictionaries/en/english.txt'),
             charset: 'windows-1252'
         },
     }
@@ -298,7 +298,7 @@ export default class SpellChecker {
         }
 
         // Synchronious loading
-        let buff = fs.readFileSync(path.resolve(input))
+        const buff = fs.readFileSync(input)
         return this.getWordsList(buff, charset, words)
     }
 
@@ -328,7 +328,7 @@ export default class SpellChecker {
         }
 
         // Asynchronious loading
-        const filePath: string = path.resolve(input)
+        const filePath: string = input
         const fileBuff: Buffer = await this.readFile(filePath)
         const wordsList: FileResult = this.getWordsList(
             fileBuff,

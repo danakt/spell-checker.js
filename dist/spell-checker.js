@@ -36,7 +36,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var fs = require("fs");
-var path = require("path");
+var path_1 = require("path");
 var iconv = require("iconv-lite");
 var XRegExp = require("xregexp");
 var SpellChecker = (function () {
@@ -47,15 +47,15 @@ var SpellChecker = (function () {
         };
         this.dictionaries = {
             ru: {
-                src: './dictionaries/ru/russian.txt',
+                src: path_1.resolve(__dirname, '../dictionaries/ru/russian.txt'),
                 charset: 'windows-1251'
             },
             ru_surnames: {
-                src: './dictionaries/ru/russian_surnames.txt',
+                src: path_1.resolve(__dirname, '../dictionaries/ru/russian_surnames.txt'),
                 charset: 'windows-1251'
             },
             en: {
-                src: './dictionaries/en/english.txt',
+                src: path_1.resolve(__dirname, '../dictionaries/en/english.txt'),
                 charset: 'windows-1252'
             },
         };
@@ -201,7 +201,7 @@ var SpellChecker = (function () {
                 size: 0
             };
         }
-        var buff = fs.readFileSync(path.resolve(input));
+        var buff = fs.readFileSync(input);
         return this.getWordsList(buff, charset, words);
     };
     SpellChecker.prototype.readDictionaryAsync = function (input, charset, words) {
@@ -218,7 +218,7 @@ var SpellChecker = (function () {
                             console.error("ERROR! File \"" + input + "\" does not exist");
                             return [2, { words: words, size: 0 }];
                         }
-                        filePath = path.resolve(input);
+                        filePath = input;
                         return [4, this.readFile(filePath)];
                     case 1:
                         fileBuff = _a.sent();
