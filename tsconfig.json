@@ -3,6 +3,7 @@
     "outDir": "./dist/",
     "target": "es5",
     "module": "commonjs",
+    "sourceMap": true,
     "moduleResolution": "node",
     "noImplicitAny": false,
     "noImplicitReturns": false,

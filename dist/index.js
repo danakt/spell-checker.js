@@ -241,3 +241,4 @@ var SpellChecker = (function () {
     return SpellChecker;
 }());
 exports.default = SpellChecker;
+//# sourceMappingURL=index.js.map
