@@ -5,5 +5,5 @@
  *
  * @todo Add support word prefixes (авто...)
  */
-const SpellChecker = require('./dist/spell-checker').default
+const SpellChecker = require('./dist').default
 module.exports = new SpellChecker()
