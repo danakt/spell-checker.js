@@ -1,3 +1,10 @@
+/**
+ * Spell-checker.js
+ * Simple expandable tool for spell checking
+ * @author Danakt Frost <mail@danakt.ru>
+ *
+ * @todo Add support word prefixes (авто...)
+ */
 import * as fs      from 'fs'
 import { resolve }  from 'path'
 import * as iconv   from 'iconv-lite'
@@ -12,7 +19,7 @@ declare interface FileResult {
     size:  number;
 }
 
-export default class SpellChecker {
+class SpellChecker {
     /** Object for storing list and the number of words */
     private BUFFER = {
         WORDS: new Set(),
@@ -356,3 +363,6 @@ export default class SpellChecker {
         })
     }
 }
+
+/** @exports */
+module.exports = new SpellChecker()

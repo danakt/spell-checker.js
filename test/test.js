@@ -1,6 +1,6 @@
 var path   = require('path')
 var expect = require('chai').expect
-var spell  = require('../')
+var spell  = require('../dist/')
 
 /** English dictionary */
 describe('English dictionary', () => {

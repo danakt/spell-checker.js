@@ -240,5 +240,5 @@ var SpellChecker = (function () {
     };
     return SpellChecker;
 }());
-exports.default = SpellChecker;
+module.exports = new SpellChecker();
 //# sourceMappingURL=index.js.map
