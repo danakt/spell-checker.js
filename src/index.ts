@@ -118,7 +118,7 @@ class SpellChecker {
         : [checked]
 
       for (let j = 0; j < checkedList.length; j++) {
-        if(checkedList[j] == null) {
+        if (checkedList[j] == null) {
           outObj[textArr[i]] = true
         }
       }
