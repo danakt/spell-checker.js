@@ -50,13 +50,9 @@ class SpellChecker {
    *   first parameter is string
    * @return {Object}
    */
-  public load(
-    inputOrProps: { input: string, charset?: string, async: true }
-  ): Promise<number>
+  public load(inputOrProps: { input: string, charset?: string, async: true }): Promise<number>
   public load(inputOrProps: string, charsetOption?: string): number
-  public load(
-    inputOrProps: { input: string, charset?: string, async?: false }
-  ): number
+  public load(inputOrProps: { input: string, charset?: string, async?: false }): number
   public load(inputOrProps, charsetOption?) {
     const options = this.parseParams(inputOrProps, charsetOption)
 
