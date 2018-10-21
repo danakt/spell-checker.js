@@ -12,7 +12,7 @@ Readme: [`English`](README.md) **`Русский`**
 
 ## Быстрый старт
 **Установка:**  
-`npm i spell-checker`
+`npm i spell-checker-js`
 
 **Использование:**
 ```js
