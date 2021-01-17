@@ -251,7 +251,7 @@ class SpellChecker {
     // Add to collection
     let i = 0
     while (i < len) {
-      words.add(list[i])
+      words.add(list[i].replace('\r', ''))
       i++
     }
 
